@@ -1,0 +1,30 @@
+server:
+  port: 10010
+# Eureka服务中心配置
+eureka:
+  client:
+    service-url:
+      # 注册中心Eureka服务地址
+      defaultZone: http://127.0.0.1:10087/eureka
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=X-Response-Default-MyName,heaven # 响应过滤器，对输出的响应设置其头部属性名称为X-Response-Default-MyName,heaven
+      # 路由si(集合)
+      routes:
+        # id唯一标识
+        - id: privoder-service-route
+          # 路由服务地址
+          # uri: http://127.0.0.1:9091
+          # 动态路由
+          uri: lb://privoder-service
+          # 断言，路由拦截规则
+          predicates:
+            - Path=/**
+          filters:
+            # - PrefixPath=/user # 添加前缀
+            - StripPrefix=1 # 去除前缀  去除path的个数
+

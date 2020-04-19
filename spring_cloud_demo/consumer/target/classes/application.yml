@@ -1,0 +1,30 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: consumer-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10087/eureka
+user-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    # 请求压缩
+    request:
+      enabled: true
+      # 压缩的起步大小
+      min-request-size: 2048
+      # 请求压缩的数据类型
+      mime-types: text/xml, application/xml, application/json
+    # 响应压缩
+    response:
+      enabled: true
+logging:
+  level:
+    com.heaven: debug
+
